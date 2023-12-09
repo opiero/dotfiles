@@ -80,19 +80,6 @@ local plugins = {
      end,
    },
   {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    },
-    config = function ()
-      require("chatgpt").setup({
-      })
-    end
-  },
-  {
     "zbirenbaum/copilot.lua",
     event="InsertEnter",
     opts = overrides.copilot
