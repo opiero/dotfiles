@@ -45,7 +45,7 @@ default_border pixel 1
 default_floating_border pixel 1
 
 # wallpaper
-exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/purple-neon.jpg
+exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/saitama.png
 
 # exec --no-startup-id polybar
 
