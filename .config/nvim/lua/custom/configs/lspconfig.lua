@@ -20,11 +20,3 @@ lspconfig.pyright.setup {
   capabilities = capabilities
 }
 
--- local servers = {"pyright"}
---
--- for _, lsp in ipairs(servers) do
---   lspconfig[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---   }
--- end
