@@ -16,6 +16,13 @@ local plugins = {
     end
   },
   {
+    "mhartington/formatter.nvim",
+    event = "VeryLazy",
+    opts = function()
+      return require "custom.configs.formatter"
+    end
+  },
+  {
     "christoomey/vim-tmux-navigator",
     lazy = false,
   },
@@ -30,15 +37,16 @@ local plugins = {
         "prettier",
         "pyright",
         "ruff",
+        "isort",
         "typescript-language-server",
       }
     }
   },
-
   {
     "zbirenbaum/copilot.lua",
     event="InsertEnter",
     opts = overrides.copilot
   },
+
 }
 return plugins
