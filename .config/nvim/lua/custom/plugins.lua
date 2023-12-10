@@ -31,7 +31,7 @@ local plugins = {
     opts = {
       ensure_installed = {
         "black",
-        "eslint-lsp",
+        "eslint_d",
         "lua-language-server",
         "mypy",
         "prettier",
