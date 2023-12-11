@@ -1,5 +1,7 @@
 import:
   - /home/piero/dotfiles/.config/alacritty/dracula.yaml
+env:
+  TERM: xterm-256color
 font:
   # The normal (roman) font face to use.
   normal:

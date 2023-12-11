@@ -5,7 +5,6 @@ export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -121,6 +120,7 @@ alias bctl='bluetoothctl'
 alias rgr='ranger'
 alias update='pamac update'
 alias copilot='gh copilot'
+alias tmux='tmux -2'
 [ -f "/home/piero/.ghcup/env" ] && source "/home/piero/.ghcup/env" # ghcup-env
 
 export PATH=$PATH:/home/piero/.temporalio/bin
