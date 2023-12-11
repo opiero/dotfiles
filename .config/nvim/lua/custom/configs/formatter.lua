@@ -10,6 +10,9 @@ local M = {
       require("formatter.filetypes.python").black,
       require("formatter.filetypes.python").isort,
     },
+    lua = {
+      require("formatter.filetypes.lua").stylua
+    },
     ["*"] = {
       require("formatter.filetypes.any").remove_trailing_whitespace
     }
