@@ -1,0 +1,27 @@
+import = ["/home/piero/dotfiles/.config/alacritty/dracula.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 15.5
+
+[font.bold]
+family = "JetBrainsMono NF"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "JetBrainsMono NF"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono NF"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
