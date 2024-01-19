@@ -8,6 +8,14 @@ local plugins = {
 			require("custom.configs.lspconfig")
 		end,
 	},
+  {
+    'ThePrimeagen/vim-be-good',
+    event = "VeryLazy"
+  },
+	{
+		"gptlang/CopilotChat.nvim",
+		event = "VeryLazy",
+	},
 	{
 		"mfussenegger/nvim-lint",
 		event = "VeryLazy",
