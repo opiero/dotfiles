@@ -125,3 +125,5 @@ alias tmux='tmux -2'
 
 export PATH=$PATH:/home/piero/.temporalio/bin
 source /usr/share/nvm/init-nvm.sh
+
+#kubectl logs <pod> -n <namespace>
