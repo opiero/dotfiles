@@ -8,10 +8,10 @@ local plugins = {
 			require("custom.configs.lspconfig")
 		end,
 	},
-  {
-    'ThePrimeagen/vim-be-good',
-    event = "VeryLazy"
-  },
+	{
+		"ThePrimeagen/vim-be-good",
+		event = "VeryLazy",
+	},
 	{
 		"gptlang/CopilotChat.nvim",
 		event = "VeryLazy",
@@ -56,6 +56,23 @@ local plugins = {
 		"zbirenbaum/copilot.lua",
 		event = "InsertEnter",
 		opts = overrides.copilot,
+	},
+	{
+		"Equilibris/nx.nvim",
+
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+
+		opts = {
+			-- See below for config options
+			nx_cmd_root = "yarn nx",
+		},
+
+		-- Plugin will load when you use these keys
+		keys = {
+			{ "<leader>nx", "<cmd>Telescope nx actions<CR>", desc = "nx actions" },
+		},
 	},
 }
 return plugins

@@ -114,8 +114,8 @@ export EDITOR='nvim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias airbyte-dev-pf='kubectl port-forward -n airbyte svc/dev-airbyte-airbyte-webapp-svc 8080:80'
-alias airbyte-prod-pf='kubectl port-forward -n airbyte svc/prod-airbyte-airbyte-webapp-svc 8080:80'
+alias airbyte-dev-pf='kubectl port-forward -n airbyte svc/dev-airbyte-airbyte-webapp-svc 8000:80'
+alias airbyte-prod-pf='kubectl port-forward -n airbyte svc/prod-airbyte-airbyte-webapp-svc 8000:80'
 alias bctl='bluetoothctl'
 alias rgr='ranger'
 alias update='pamac update'
