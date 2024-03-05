@@ -74,6 +74,7 @@ local plugins = {
 					"bash",
 					"sql",
 					"vimdoc",
+          "go"
 				},
 				sync_install = false,
 				highlight = { enable = true },
