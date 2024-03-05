@@ -58,6 +58,30 @@ local plugins = {
 		opts = overrides.copilot,
 	},
 	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+
+			configs.setup({
+				ensure_installed = {
+					"python",
+					"lua",
+					"typescript",
+					"javascript",
+					"json",
+					"yaml",
+					"bash",
+					"sql",
+					"vimdoc",
+				},
+				sync_install = false,
+				highlight = { enable = true },
+				indent = { enable = true },
+			})
+		end,
+	},
+	{
 		"Equilibris/nx.nvim",
 
 		dependencies = {
@@ -65,11 +89,9 @@ local plugins = {
 		},
 
 		opts = {
-			-- See below for config options
 			nx_cmd_root = "nx",
 		},
 		event = "VeryLazy",
-		-- Plugin will load when you use these keys
 		keys = {
 			{ "<leader>nx", "<cmd>Telescope nx actions<CR>", desc = "nx actions" },
 		},
