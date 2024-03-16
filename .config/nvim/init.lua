@@ -63,6 +63,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 require 'mapping.diagnostics'
 require 'mapping.disable_arrow_keys'
 require 'mapping.move_focus'
+require 'mapping.tmux-vim-navigator'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
@@ -81,6 +82,7 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   require 'plugins.comment',
   require 'plugins.conform',
+  require 'plugins.vim-tmux-navigator',
   require 'plugins.gitsigns',
   require 'plugins.nvim-cmp',
   require 'plugins.nvim-lspconfig',
