@@ -31,6 +31,9 @@ vim.opt.signcolumn = 'yes'
 
 vim.opt.updatetime = 250
 
+--disable swap file
+vim.opt.swapfile = false
+
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
@@ -85,6 +88,8 @@ require('lazy').setup({
   require 'plugins.themes.tokyonight',
   require 'plugins.todo-comments',
   require 'plugins.treesitter',
+  require 'plugins.copilot-chat',
+  require 'plugins.copilot',
   require 'plugins.which-key',
 }, {
   ui = {
