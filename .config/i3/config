@@ -48,7 +48,7 @@ default_border pixel 1
 default_floating_border pixel 1
 
 # wallpaper
-exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/darkside.jpg
+exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/die.jpg
 
 # exec --no-startup-id polybar
 
