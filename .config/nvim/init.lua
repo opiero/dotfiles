@@ -1,16 +1,9 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -21,6 +14,8 @@ vim.opt.showmode = true
 vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.breakindent = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 
 vim.opt.undofile = true
 
@@ -42,9 +37,6 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -62,14 +54,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 require 'mapping.diagnostics'
 require 'mapping.disable_arrow_keys'
 require 'mapping.move_focus'
-require 'mapping.tmux-vim-navigator'
 require 'mapping.nvtree'
+require 'mapping.tmux-vim-navigator'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -82,23 +72,21 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   require 'plugins.comment',
   require 'plugins.conform',
-  require 'plugins.vim-tmux-navigator',
+  require 'plugins.copilot',
+  require 'plugins.copilot-chat',
   require 'plugins.gitsigns',
+  require 'plugins.nvim-autopairs',
   require 'plugins.nvim-cmp',
   require 'plugins.nvim-lspconfig',
+  require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',
   require 'plugins.todo-comments',
   require 'plugins.treesitter',
-  require 'plugins.copilot-chat',
-  require 'plugins.copilot',
+  require 'plugins.vim-tmux-navigator',
   require 'plugins.which-key',
-  require 'plugins.nvtree',
-  require 'plugins.nvim-autopairs',
 }, {
   ui = {
-    -- If you have a Nerd Font, set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',

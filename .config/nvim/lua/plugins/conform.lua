@@ -17,6 +17,7 @@ local M = { -- Autoformat
       typescript = { 'prettier' },
       javascript = { 'prettier' },
       python = { 'isort', 'black' },
+      go = { 'golines', 'goimports-reviser', 'gofumpt' },
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
       -- is found.
