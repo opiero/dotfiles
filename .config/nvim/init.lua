@@ -59,11 +59,11 @@ vim.opt.scrolloff = 5
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
 require 'mapping.diagnostics'
 require 'mapping.disable_arrow_keys'
 require 'mapping.move_focus'
 require 'mapping.tmux-vim-navigator'
+require 'mapping.nvtree'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
@@ -93,6 +93,8 @@ require('lazy').setup({
   require 'plugins.copilot-chat',
   require 'plugins.copilot',
   require 'plugins.which-key',
+  require 'plugins.nvtree',
+  require 'plugins.nvim-autopairs',
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
