@@ -128,3 +128,4 @@ source /usr/share/nvm/init-nvm.sh
 
 #kubectl logs <pod> -n <namespace>
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(atuin init zsh)"

@@ -22,7 +22,7 @@ vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'auto'
 
 vim.opt.updatetime = 250
 
@@ -81,6 +81,9 @@ require('lazy').setup({
   require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',
+  require 'plugins.themes.gruvbox',
+  require 'plugins.themes.kanagawa',
+  require 'plugins.themes.catpuccin',
   require 'plugins.todo-comments',
   require 'plugins.treesitter',
   require 'plugins.vim-tmux-navigator',
@@ -104,3 +107,5 @@ require('lazy').setup({
     },
   },
 })
+
+vim.cmd.colorscheme 'kanagawa'
