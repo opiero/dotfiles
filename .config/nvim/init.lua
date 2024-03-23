@@ -59,6 +59,7 @@ require 'mapping.tmux-vim-navigator'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
+require 'autocommands.conceallevel_markdown'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -73,6 +74,7 @@ require('lazy').setup({
   require 'plugins.comment',
   require 'plugins.conform',
   require 'plugins.copilot',
+  require 'plugins.obsidian',
   require 'plugins.copilot-chat',
   require 'plugins.gitsigns',
   require 'plugins.nvim-autopairs',
