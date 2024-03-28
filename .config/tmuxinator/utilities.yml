@@ -1,6 +1,6 @@
 # /home/piero/.config/tmuxinator/pessoal.yml
 
-name: personal
+name: utilities
 root: ~/
 
 # Optional tmux socket
@@ -36,7 +36,7 @@ root: ~/
 # tmux_command: byobu
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-startup_window: main
+startup_window: obsidian
 
 # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
 # startup_pane: 1
@@ -45,8 +45,7 @@ startup_window: main
 # attach: false
 
 windows:
-  - main:
-      layout: main-vertical
+  - obsidian: cd ~/Documents/Obsidian\ Vault/ && nvim .
   - bluetooth: bluetoothctl
 
       # Synchronize all panes of this window, can be enabled before or after the pane commands run.
