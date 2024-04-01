@@ -1,6 +1,6 @@
 # /home/piero/.config/tmuxinator/pessoal.yml
 
-name: utilities
+name: utils
 root: ~/
 
 # Optional tmux socket
