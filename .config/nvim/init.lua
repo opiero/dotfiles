@@ -16,10 +16,10 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.breakindent = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+vim.opt.expandtab = true
 
 vim.opt.undofile = true
 
-vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.signcolumn = 'auto'
@@ -89,6 +89,7 @@ require('lazy').setup({
   require 'plugins.todo-comments',
   require 'plugins.treesitter',
   require 'plugins.vim-tmux-navigator',
+  require 'plugins.dashboard-nvim',
   require 'plugins.which-key',
 }, {
   ui = {

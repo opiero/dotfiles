@@ -97,12 +97,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
 export EDITOR='nvim'
 
 # Compilation flags
@@ -112,20 +106,19 @@ export EDITOR='nvim'
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
 alias airbyte-dev-pf='kubectl port-forward -n airbyte svc/dev-airbyte-airbyte-webapp-svc 8000:80'
 alias airbyte-prod-pf='kubectl port-forward -n airbyte svc/prod-airbyte-airbyte-webapp-svc 8000:80'
 alias bctl='bluetoothctl'
-alias rgr='ranger'
-alias update='pamac update'
+alias ua='pamac update -a'
 alias copilot='gh copilot'
 alias tmux='tmux -2'
+alias clear='clear -x'
+alias bq-setup='source ~/Gorila/inits/bq.sh'
+
 [ -f "/home/piero/.ghcup/env" ] && source "/home/piero/.ghcup/env" # ghcup-env
 
 export PATH=$PATH:/home/piero/.temporalio/bin
 source /usr/share/nvm/init-nvm.sh
 
-#kubectl logs <pod> -n <namespace>
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
