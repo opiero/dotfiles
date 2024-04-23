@@ -20,7 +20,7 @@ vim.opt.expandtab = true
 
 vim.opt.undofile = true
 
-vim.opt.smartcase = true
+vim.opt.ignorecase = true
 
 vim.opt.signcolumn = 'auto'
 

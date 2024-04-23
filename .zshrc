@@ -124,6 +124,7 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+eval "$(thefuck --alias)"
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
@@ -139,4 +140,4 @@ _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
 
-source ./.config/fzf-git/fzf-git.sh
+source ~/dotfiles/.config/fzf-git/fzf-git.sh
