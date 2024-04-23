@@ -122,3 +122,8 @@ source /usr/share/nvm/init-nvm.sh
 
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
