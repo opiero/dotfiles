@@ -123,6 +123,7 @@ source /usr/share/nvm/init-nvm.sh
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
 eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(thefuck --alias)"
 
