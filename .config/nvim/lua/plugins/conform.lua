@@ -16,7 +16,7 @@ local M = { -- Autoformat
       lua = { 'stylua' },
       typescript = { 'prettier' },
       javascript = { 'prettier' },
-      python = { 'isort', 'black' },
+      python = { 'isort', 'ruff', 'black' },
       go = { 'golines', 'goimports-reviser', 'gofumpt' },
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
