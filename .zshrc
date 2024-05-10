@@ -114,6 +114,7 @@ alias copilot='gh copilot'
 alias tmux='tmux -2'
 alias clear='clear -x'
 alias bq-setup='source ~/Gorila/inits/bq.sh'
+alias temporal-dev-sec-setup='source ~/Gorila/inits/temporal_sec_dev.sh'
 
 [ -f "/home/piero/.ghcup/env" ] && source "/home/piero/.ghcup/env" # ghcup-env
 
@@ -122,9 +123,6 @@ source /usr/share/nvm/init-nvm.sh
 
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
-eval "$(pyenv init -)"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
 eval "$(thefuck --alias)"
 
 # Set up fzf key bindings and fuzzy completion
