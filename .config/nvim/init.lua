@@ -60,6 +60,7 @@ require 'mapping.tmux-vim-navigator'
 -- Autocommands
 require 'autocommands.highlight_yanking'
 require 'autocommands.conceallevel_markdown'
+require 'autocommands.remove_trailing_whitespace'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
