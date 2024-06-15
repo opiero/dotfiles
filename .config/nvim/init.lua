@@ -72,13 +72,14 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   'tpope/vim-sleuth',
+  require 'plugins.nvim-dap',
   require 'plugins.comment',
   require 'plugins.conform',
   require 'plugins.obsidian',
   require 'plugins.gitsigns',
   require 'plugins.nvim-autopairs',
-  require 'plugins.nvim-cmp',
   require 'plugins.nvim-lspconfig',
+  require 'plugins.nvim-cmp',
   require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',

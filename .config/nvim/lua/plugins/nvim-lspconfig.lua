@@ -159,6 +159,7 @@ local M = { -- LSP Configuration & Plugins
       'isort',
       'golines',
       'gofumpt',
+      'debugpy',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
