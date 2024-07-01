@@ -72,18 +72,18 @@ ZSH_THEME="refined"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  copybuffer 
-  copyfile 
-  copypath 
-  cp 
-  dirhistory 
-  docker 
-  git 
+  copybuffer
+  copyfile
+  copypath
+  cp
+  dirhistory
+  docker
+  git
   jsontools
-  sudo 
-  tmuxinator 
+  sudo
+  tmuxinator
   web-search
-  zsh-autosuggestions 
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -142,3 +142,5 @@ source ~/dotfiles/.config/fzf-git/fzf-git.sh
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
