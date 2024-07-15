@@ -90,6 +90,7 @@ require('lazy').setup({
   require 'plugins.treesitter',
   require 'plugins.vim-tmux-navigator',
   require 'plugins.dashboard-nvim',
+  require 'plugins.easytables',
   require 'plugins.which-key',
 }, {
   ui = {
