@@ -1,6 +1,6 @@
 # /home/piero/.config/tmuxinator/dbt-dev.yml
 
-name: dbt-prod
+name: dbt-gorila_bigquery
 root: /home/piero/Gorila/bi/dbt
 
 # Note that the pre and post options have been deprecated and will be replaced by
@@ -42,9 +42,9 @@ root: /home/piero/Gorila/bi/dbt
 # attach: false
 
 windows:
-  - dbt-console: source .venv/bin/activate && source .env && DBT_ENV=prod
-  - models: cd projects/prod/models && nvim .
-  - macros: cd projects/prod/macros && nvim .
-  - tests: cd projects/prod/tests && nvim .
-  - target: cd projects/prod/target && nvim .
-  - seeds: cd projects/prod/seeds && nvim .
+  - dbt-console: source .venv/bin/activate && source .env && DBT_ENV=gorila_bigquery
+  - models: cd projects/gorila_bigquery/models && nvim .
+  - macros: cd projects/gorila_bigquery/macros && nvim .
+  - tests: cd projects/gorila_bigquery/tests && nvim .
+  - target: cd projects/gorila_bigquery/target && nvim .
+  - seeds: cd projects/gorila_bigquery/seeds && nvim .

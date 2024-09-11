@@ -114,6 +114,7 @@ alias tmux='tmux -2'
 alias clear='clear -x'
 alias bq-setup='source ~/Gorila/inits/bq.sh'
 alias temporal-dev-sec-setup='source ~/Gorila/inits/temporal_sec_dev.sh'
+alias btop='bashtop'
 
 [ -f "/home/piero/.ghcup/env" ] && source "/home/piero/.ghcup/env" # ghcup-env
 
