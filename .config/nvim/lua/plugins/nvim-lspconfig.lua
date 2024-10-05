@@ -111,7 +111,7 @@ local M = { -- LSP Configuration & Plugins
       ruff = {},
       clangd = {},
       arduino_language_server = {},
-      tsserver = {},
+      ts_ls = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -137,7 +137,7 @@ local M = { -- LSP Configuration & Plugins
     vim.list_extend(ensure_installed, {
       'stylua',
       'pyright',
-      'tsserver',
+      'ts-standard',
       'black',
       'eslint_d',
       'ruff',

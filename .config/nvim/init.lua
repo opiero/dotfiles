@@ -92,6 +92,7 @@ require('lazy').setup({
   require 'plugins.dashboard-nvim',
   require 'plugins.easytables',
   require 'plugins.which-key',
+  require 'plugins.mini_icons',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
