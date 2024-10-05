@@ -1,6 +1,6 @@
 # /home/piero/.config/tmuxinator/trabalho1.yml
 
-name: work
+name: standard
 root: ~
 
 # Optional tmux socket
