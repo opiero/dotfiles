@@ -146,3 +146,5 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
 # [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
