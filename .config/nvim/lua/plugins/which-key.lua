@@ -20,5 +20,6 @@ local M = { -- Useful plugin to show you pending keybinds.
       { '<leader>w_', hidden = true },
     }
   end,
+  dependencies = { 'echasnovski/mini.icons', version = false },
 }
 return M
