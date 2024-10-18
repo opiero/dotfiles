@@ -142,6 +142,7 @@ local M = { -- LSP Configuration & Plugins
       'eslint_d',
       'ruff',
       'prettier',
+      'prettierd',
       'gopls',
       'goimports-reviser',
       'isort',

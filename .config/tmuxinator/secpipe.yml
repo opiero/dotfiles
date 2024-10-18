@@ -47,8 +47,13 @@ root: ~/Gorila/securities/
 windows:
   - shell:
     layout: main-vertical
+  - security-activities: cd libs/js/temporal/security-activities && nvim .
+  - security-workflows: cd libs/js/temporal/security-workflows && nvim .
+  - price-activities: cd libs/js/temporal/price-activities && nvim .
+  - price-workflows: cd libs/js/temporal/price-workflows && nvim .
   - event-activities: cd libs/js/temporal/event-activities && nvim .
   - event-workflows: cd libs/js/temporal/event-workflows && nvim .
+
 
 
   # - editor:

@@ -14,8 +14,8 @@ local M = { -- Autoformat
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      typescript = { 'prettier' },
-      javascript = { 'prettier' },
+      typescript = { 'prettierd' },
+      javascript = { 'prettierd' },
       python = { 'isort', 'black' },
       go = { 'golines', 'goimports-reviser', 'gofumpt' },
       --
