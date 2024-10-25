@@ -148,3 +148,4 @@ eval "$(pyenv init -)"
 # [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export XDG_CURRENT_DESKTOP=Hyprland
