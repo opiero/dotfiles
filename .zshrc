@@ -35,7 +35,6 @@ zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
-zinit snippet OMZP::docker
 zinit snippet OMZP::copyfile
 zinit snippet OMZP::copypath
 zinit snippet OMZP::tmuxinator
