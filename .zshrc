@@ -17,6 +17,9 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+
 # Add in Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
@@ -37,6 +40,7 @@ zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::copyfile
 zinit snippet OMZP::copypath
+zinit snippet OMZP::dircycle
 zinit snippet OMZP::tmuxinator
 
 # Load completions
@@ -53,7 +57,7 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 # History
-HISTSIZE=5000
+HISTSIZE=50000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -85,11 +89,14 @@ alias ua='pamac update -a'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(pyenv init -)"
 
 # Environment Variables
 export BROWSER="$(which firefox)"
 export EDITOR='nvim'
+export GPG_TTY="$(tty)"
 export GPG_TTY=$(tty)
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
 export PATH=$PATH:/home/piero/.temporalio/bin
+export PYENV_ROOT
 export XDG_CURRENT_DESKTOP=Hyprland

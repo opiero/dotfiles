@@ -47,6 +47,7 @@ root: ~/Gorila/securities/
 windows:
   - shell:
     layout: main-vertical
+  - client: cd libs/js/proxies/src/lib/external && nvim cbonds.ts
   - price-activities: cd libs/js/temporal/price-activities && nvim .
   - price-workflows: cd libs/js/temporal/price-workflows && nvim .
   - security-activities: cd libs/js/temporal/security-activities && nvim .
