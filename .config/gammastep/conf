@@ -55,8 +55,8 @@ adjustment-method=randr
 ; Keep in mind that longitudes west of Greenwich (e.g. the Americas)
 ; are negative numbers.
 [manual]
-lat=-23.54
-lon=-46.64
+lat=48.1
+lon=11.6
 
 ; Configuration of the adjustment-method
 ; type 'gammastep -m METHOD:help' to see the settings.

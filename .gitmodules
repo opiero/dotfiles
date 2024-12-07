@@ -4,3 +4,6 @@
 [submodule ".config/fzf-git"]
 	path = .config/fzf-git
 	url = https://github.com/junegunn/fzf-git.sh.git
+[submodule ".local/share/icons/rose-pine-hyprcursor"]
+	path = .local/share/icons/rose-pine-hyprcursor
+	url = git@github.com:ndom91/rose-pine-hyprcursor.git
