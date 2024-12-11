@@ -31,16 +31,21 @@ zinit light Aloxaf/fzf-tab
 
 # Add in snippets
 zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
 zinit snippet OMZP::archlinux
 zinit snippet OMZP::aws
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
+zinit snippet OMZP::aws
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::copyfile
 zinit snippet OMZP::copypath
 zinit snippet OMZP::dircycle
+zinit snippet OMZP::dirhistory
+zinit snippet OMZP::gcloud
+zinit snippet OMZP::git
+# zinit snippet OMZP::httpie
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+# zinit snippet OMZP::pass
+zinit snippet OMZP::sudo
 zinit snippet OMZP::tmuxinator
 
 # Load completions
