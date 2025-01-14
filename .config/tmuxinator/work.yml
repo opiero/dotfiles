@@ -46,7 +46,6 @@ root: ~
 
 windows:
   - main:
-  - discord: env XDG_SESSION_TYPE=x11 discord
 
 
 
