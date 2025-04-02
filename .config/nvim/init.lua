@@ -75,7 +75,6 @@ require('lazy').setup({
   require 'plugins.nvim-dap',
   require 'plugins.comment',
   require 'plugins.conform',
-  require 'plugins.obsidian',
   require 'plugins.gitsigns',
   require 'plugins.nvim-autopairs',
   require 'plugins.nvim-lspconfig',

@@ -1,3 +1,6 @@
+#Adding homebrew to PATH
+export PATH=/opt/homebrew/bin:$PATH
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -103,5 +106,8 @@ export GPG_TTY="$(tty)"
 export GPG_TTY=$(tty)
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
 export PATH=$PATH:/home/piero/.temporalio/bin
+export PATH=$PATH:$HOME/.local/bin
 export PYENV_ROOT
 export XDG_CURRENT_DESKTOP=Hyprland
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export JAVA_HOME="/opt/homebrew/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home"
