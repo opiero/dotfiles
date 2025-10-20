@@ -100,7 +100,7 @@ export BROWSER="$(which firefox)"
 export EDITOR='nvim'
 export GPG_TTY="$(tty)"
 export GPG_TTY=$(tty)
-export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
+export PATH=$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin
 export PATH=$PATH:/home/piero/.temporalio/bin
 export PATH=$PATH:$HOME/.local/bin
 export PYENV_ROOT
