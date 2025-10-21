@@ -82,6 +82,7 @@ require('lazy').setup({
   require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',
+  require 'plugins.themes.nagai-poolside',
   require 'plugins.themes.gruvbox',
   require 'plugins.themes.kanagawa',
   require 'plugins.themes.catpuccin',
@@ -110,4 +111,4 @@ require('lazy').setup({
   },
 })
 
-vim.cmd.colorscheme 'kanagawa'
+vim.cmd.colorscheme 'nagai-poolside'
