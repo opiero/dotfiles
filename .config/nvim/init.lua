@@ -111,4 +111,4 @@ require('lazy').setup({
   },
 })
 
-vim.cmd.colorscheme 'nagai-poolside'
+vim.cmd.colorscheme 'kanagawa'
