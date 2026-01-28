@@ -10,8 +10,5 @@ local M = { -- Highlight, edit, and navigate code
     },
     indent = { enable = true, disable = { 'ruby' } },
   },
-  config = function(_, opts)
-    require('nvim-treesitter.config').setup(opts)
-  end,
 }
 return M
