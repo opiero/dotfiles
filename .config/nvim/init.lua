@@ -91,6 +91,7 @@ require('lazy').setup({
   require 'plugins.vim-tmux-navigator',
   require 'plugins.easytables',
   require 'plugins.which-key',
+  require 'plugins.nvim-highlight-colors',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
