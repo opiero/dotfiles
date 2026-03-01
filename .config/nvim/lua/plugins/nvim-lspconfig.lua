@@ -115,6 +115,7 @@ local M = { -- LSP Configuration & Plugins
       ts_ls = {},
       html = {},
       cssls = {},
+      hyprls = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -141,6 +142,7 @@ local M = { -- LSP Configuration & Plugins
       'stylua',
       'pyright',
       'ts-standard',
+      'hyprls',
       'black',
       'mypy',
       'eslint_d',
