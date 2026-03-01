@@ -16,6 +16,8 @@ local M = { -- Autoformat
       lua = { 'stylua' },
       typescript = { 'prettierd' },
       javascript = { 'prettierd' },
+      html = { 'prettierd' },
+      css = { 'prettierd' },
       python = { 'isort', 'black' },
       go = { 'golines', 'goimports-reviser', 'gofumpt' },
       --

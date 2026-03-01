@@ -113,6 +113,8 @@ local M = { -- LSP Configuration & Plugins
       clangd = {},
       arduino_language_server = {},
       ts_ls = {},
+      html = {},
+      cssls = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -151,6 +153,8 @@ local M = { -- LSP Configuration & Plugins
       'golines',
       'gofumpt',
       'debugpy',
+      'html-lsp',
+      'cssls',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
