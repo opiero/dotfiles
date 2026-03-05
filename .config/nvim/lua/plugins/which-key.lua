@@ -18,6 +18,8 @@ local M = { -- Useful plugin to show you pending keybinds.
       { '<leader>s_', hidden = true },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>w_', hidden = true },
+      { '<leader>i', group = 'File [I]terate' },
+      { '<leader>i_', hidden = true },
     }
   end,
   dependencies = { 'echasnovski/mini.icons', version = false },

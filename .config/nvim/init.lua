@@ -56,6 +56,7 @@ require 'mapping.disable_arrow_keys'
 require 'mapping.move_focus'
 require 'mapping.nvtree'
 require 'mapping.tmux-vim-navigator'
+require 'mapping.file-navigation'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
