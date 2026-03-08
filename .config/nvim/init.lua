@@ -64,8 +64,6 @@ require 'autocommands.highlight_yanking'
 require 'autocommands.conceallevel_markdown'
 require 'autocommands.remove_trailing_whitespace'
 
--- Standalone LSP's
-require 'lsp.dbt'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -119,3 +117,5 @@ require('lazy').setup({
 })
 
 vim.cmd.colorscheme 'kanagawa'
+-- Standalone LSP's
+require 'lsp.dbt'
