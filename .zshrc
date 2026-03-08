@@ -107,3 +107,9 @@ export PYENV_ROOT
 export XDG_CURRENT_DESKTOP=Hyprland
 export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 export JAVA_HOME="/opt/homebrew/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home"
+# Added by dbt Fusion extension (ensure dbt binary dir on PATH)
+if [[ ":$PATH:" != *":/home/pieroc/.local/bin:"* ]]; then
+  export PATH=/home/pieroc/.local/bin:"$PATH"
+fi
+# Added by dbt Fusion extension
+alias dbtf=/home/pieroc/.local/bin/dbt
