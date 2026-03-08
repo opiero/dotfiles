@@ -1,0 +1,5 @@
+vim.keymap.set('n', '<leader>drf', '<cmd>DbtRun<cr>', { desc = '[D]bt [R]un [F]ile' })
+vim.keymap.set('n', '<leader>drp', '<cmd>DbtRunAll<cr>', { desc = '[D]bt [R]un whole [P]roject' })
+vim.keymap.set('n', '<leader>dtf', '<cmd>DbtTest<cr>', { desc = '[D]bt [T]est [F]ile' })
+vim.keymap.set('n', '<leader>dtp', '<cmd>DbtTestAll<cr>', { desc = '[D]bt [T]est whole [P]roject' })
+vim.keymap.set('n', '<leader>ds', "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>", { desc = '[D]bt [S]elect Model' })

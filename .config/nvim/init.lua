@@ -57,6 +57,7 @@ require 'mapping.move_focus'
 require 'mapping.nvtree'
 require 'mapping.tmux-vim-navigator'
 require 'mapping.file-navigation'
+require 'mapping.dbtpal'
 
 -- Autocommands
 require 'autocommands.highlight_yanking'
@@ -80,6 +81,7 @@ require('lazy').setup({
   require 'plugins.nvim-autopairs',
   require 'plugins.nvim-lspconfig',
   require 'plugins.nvim-cmp',
+  require 'plugins.dbtpal',
   require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',
