@@ -64,7 +64,6 @@ require 'autocommands.highlight_yanking'
 require 'autocommands.conceallevel_markdown'
 require 'autocommands.remove_trailing_whitespace'
 
-
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -83,6 +82,7 @@ require('lazy').setup({
   require 'plugins.nvim-lspconfig',
   require 'plugins.nvim-cmp',
   require 'plugins.dbtpal',
+  require 'plugins.nvim-dev-container',
   require 'plugins.nvtree',
   require 'plugins.telescope',
   require 'plugins.themes.tokyonight',
