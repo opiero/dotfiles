@@ -97,6 +97,10 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Environment Variables
 export BROWSER="$(which firefox)"
+export CLAUDE_CODE_USE_VERTEX=1
+export CLOUD_ML_REGION=global
+export ANTHROPIC_VERTEX_PROJECT_ID=gen-lang-client-0536514452
+export ANTHROPIC_MODEL='claude-opus-4-5@20251101'
 export EDITOR='nvim'
 export GPG_TTY="$(tty)"
 export GPG_TTY=$(tty)
@@ -113,3 +117,12 @@ if [[ ":$PATH:" != *":/home/pieroc/.local/bin:"* ]]; then
 fi
 # Added by dbt Fusion extension
 alias dbtf=/home/pieroc/.local/bin/dbt
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/pieroc/google-cloud-sdk/path.zsh.inc' ]; then . '/home/pieroc/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/pieroc/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pieroc/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by dbt installer
+export PATH="$PATH:/home/pieroc/.local/bin"

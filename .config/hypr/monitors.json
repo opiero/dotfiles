@@ -1,0 +1,28 @@
+{
+  "workspaces": [
+    {
+      "name": "Default",
+      "monitors": {
+        "desc:Samsung Electric Company U32J59x HX5TA00693": {
+          "resolution": "3840x2160",
+          "refresh_rate": 30.0,
+          "scale": 1.0,
+          "rotation": 0,
+          "position_x": 1440,
+          "position_y": 0,
+          "is_primary": false
+        },
+        "eDP-1": {
+          "resolution": "2880x1800",
+          "refresh_rate": 120.001,
+          "scale": 2.0,
+          "rotation": 0,
+          "position_x": 0,
+          "position_y": 0,
+          "is_primary": true
+        }
+      }
+    }
+  ],
+  "active_workspace": 0
+}
