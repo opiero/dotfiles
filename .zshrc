@@ -97,10 +97,6 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Environment Variables
 export BROWSER="$(which firefox)"
-export CLAUDE_CODE_USE_VERTEX=1
-export CLOUD_ML_REGION=global
-export ANTHROPIC_VERTEX_PROJECT_ID=gen-lang-client-0536514452
-export ANTHROPIC_MODEL='claude-opus-4-5@20251101'
 export EDITOR='nvim'
 export GPG_TTY="$(tty)"
 export GPG_TTY=$(tty)
@@ -126,3 +122,6 @@ if [ -f '/home/pieroc/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pier
 
 # Added by dbt installer
 export PATH="$PATH:/home/pieroc/.local/bin"
+# Token fora do repo: dotfiles e publico. Eager porque o devcontainer
+# repassa GITLAB_TOKEN pelo remoteEnv e precisa dele no ambiente.
+export GITLAB_TOKEN="$(pass show revena/gitlab-pat)"
