@@ -63,6 +63,10 @@ require 'mapping.dbtpal'
 require 'autocommands.highlight_yanking'
 require 'autocommands.conceallevel_markdown'
 require 'autocommands.remove_trailing_whitespace'
+require 'autocommands.autoread'
+
+-- Comandos de usuario
+require 'commands.devcontainer'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -75,8 +79,10 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   'tpope/vim-sleuth',
   require 'plugins.nvim-dap',
+  require 'plugins.claudecode',
   require 'plugins.comment',
   require 'plugins.conform',
+  require 'plugins.lazydev',
   require 'plugins.gitsigns',
   require 'plugins.nvim-autopairs',
   require 'plugins.nvim-lspconfig',
@@ -119,3 +125,4 @@ require('lazy').setup({
 vim.cmd.colorscheme 'kanagawa'
 -- Standalone LSP's
 require 'lsp.dbt'
+require 'lsp.pyright'
