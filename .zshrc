@@ -125,3 +125,6 @@ export PATH="$PATH:/home/pieroc/.local/bin"
 # Token fora do repo: dotfiles e publico. Eager porque o devcontainer
 # repassa GITLAB_TOKEN pelo remoteEnv e precisa dele no ambiente.
 export GITLAB_TOKEN="$(pass show revena/gitlab-pat)"
+# Idem: os .env dos projetos so referenciam ${DATABRICKS_TOKEN}, entao o valor
+# precisa vir do host (docker compose interpola env_file a partir daqui).
+export DATABRICKS_TOKEN="$(pass show revena/databricks/pat | head -1)"
