@@ -285,6 +285,15 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name  = "pritunl-floating",
+    match = { class = "(?i)^pritunl$" },
+
+    float  = true,
+    size   = "430 520",
+    center = true,
+})
+
+hl.window_rule({
     name  = "pip-floating",
     match = { title = "^(Picture-in-Picture)$" },
 
