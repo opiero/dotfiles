@@ -46,3 +46,16 @@ key = "prefix+?"
 type = "plugin_action"
 command = "ramarivera.pretty-which.open"
 description = "pretty which (guia de atalhos)"
+
+# Mostra o título da sessão do Claude na barra lateral
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]
+
+# Picker de agentes estilo Telescope (fzf, ctrl+n/ctrl+p navegam)
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "~/.config/herdr/scripts/agent-picker.sh"
+description = "agent picker (fzf)"
+width = "85%"
+height = "70%"
