@@ -196,7 +196,19 @@ hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu), { description = "abre o launcher" })
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+-- Troca os workspaces ativos entre o monitor em foco e o próximo
+-- (com 2 monitores: o workspace do A vai pro B e o do B vai pro A)
+hl.bind(mainMod .. " + P", function()
+    local mons = hl.get_monitors()
+    if #mons < 2 then return end
+    for i, mon in ipairs(mons) do
+        if mon.focused then
+            local other = mons[i % #mons + 1]
+            hl.dispatch(hl.dsp.workspace.swap_monitors({ monitor1 = mon.name, monitor2 = other.name }))
+            return
+        end
+    end
+end, { description = "troca os workspaces ativos entre os monitores" })
 
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))
 
