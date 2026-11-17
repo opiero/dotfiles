@@ -55,12 +55,15 @@ hl.env("HYPRCURSOR_SIZE", "24")
 ---- LOOK AND FEEL ----
 -----------------------
 
+-- Valores padrão (usados também pelo toggle de gaps, SUPER+SHIFT+BACKSPACE)
+local default_gaps_in, default_gaps_out, default_border = 5, 5, 2
+
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 5,
+        gaps_in  = default_gaps_in,
+        gaps_out = default_gaps_out,
 
-        border_size = 2,
+        border_size = default_border,
 
         col = {
             active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
@@ -196,6 +199,15 @@ hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu), { description = "abre o la
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))
+
+-- Toggle de gaps (estilo Omarchy): zera os gaps (mantém a borda), ou volta pros padrões
+hl.bind("SUPER + SHIFT + BACKSPACE", function()
+    local on = hl.get_config("general:gaps_out").top == 0
+    hl.config({ general = {
+        gaps_in     = on and default_gaps_in  or 0,
+        gaps_out    = on and default_gaps_out or 0,
+    } })
+end, { description = "liga/desliga os gaps entre janelas" })
 
 -- Move focus com mainMod + HJKL (vim-style)
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
