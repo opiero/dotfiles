@@ -122,9 +122,67 @@ if [ -f '/home/pieroc/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pier
 
 # Added by dbt installer
 export PATH="$PATH:/home/pieroc/.local/bin"
-# Token fora do repo: dotfiles e publico. Eager porque o devcontainer
-# repassa GITLAB_TOKEN pelo remoteEnv e precisa dele no ambiente.
-export GITLAB_TOKEN="$(pass show revena/gitlab-pat)"
-# Idem: os .env dos projetos so referenciam ${DATABRICKS_TOKEN}, entao o valor
-# precisa vir do host (docker compose interpola env_file a partir daqui).
-export DATABRICKS_TOKEN="$(pass show revena/databricks/pat | head -1)"
+# Segredos do pass, carregados sob demanda. Nenhum valor mora neste arquivo
+# (dotfiles e publico) e abrir um terminal nao decripta nada.
+#
+# Por que exportar de verdade em vez de passar inline no comando: o devcontainer
+# usa "${localEnv:GITLAB_TOKEN}" no remoteEnv, e o docker compose interpola os
+# env_file a partir do ambiente do shell que o chamou. Os dois leem o ambiente
+# do processo pai, nao a linha de comando.
+#
+# Por que preexec em vez de wrapper de funcao: preexec ve a linha crua digitada,
+# entao pega alias (dbtf) tambem, e nao entra em conflito com as funcoes que os
+# plugins do zinit definem.
+revena-tokens() {
+  export GITLAB_TOKEN="$(pass show revena/gitlab-pat)"
+  export DATABRICKS_TOKEN="$(pass show revena/databricks/pat | head -1)"
+}
+
+# Ferramentas que precisam dos tokens no ambiente. Adicione aqui se faltar alguma.
+#
+# O padrao casa o nome em qualquer posicao da linha, inclusive dentro de um
+# caminho: ./scripts/glab_update_mr_description.sh chama glab como processo
+# filho, e preexec nao dispara pra processo filho. Se so olhassemos a primeira
+# palavra, o glab de dentro do script rodaria sem token e tomaria 401.
+#
+# Falso positivo (ex.: "grep docker log.txt") custa um pass show que o agente ja
+# tem em cache, ou seja ~nada. Falso negativo custa um 401 confuso. Erra pro
+# lado de disparar.
+_revena_secret_re='(^|[/[:space:]])(dbtf|docker-compose|docker|devcontainer|codium|cursor|code|dbt|glab)([[:space:]_.:=/-]|$)'
+
+_revena_maybe_load_tokens() {
+  [[ -n $GITLAB_TOKEN && -n $DATABRICKS_TOKEN ]] && return 0
+  [[ $1 =~ $_revena_secret_re ]] || return 0
+  revena-tokens
+}
+
+export HONCHO_PEER_NAME="$USER"
+
+_honcho_maybe_load_key() {
+  [[ -n $HONCHO_API_KEY ]] && return 0
+  [[ $1 =~ '(^|[/[:space:]])claude([[:space:]]|$)' ]] || return 0
+  export HONCHO_API_KEY="$(pass show honcho/claude-code/api-key | head -1)"
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _revena_maybe_load_tokens
+add-zsh-hook preexec _honcho_maybe_load_key
+
+# Dentro de ~/Projetos (recursivo) o Claude Code usa a conta pessoal: login,
+# settings e plugins ficam em ~/.claude-pessoal. Fora dele, volta pro ~/.claude.
+_claude_pick_account() {
+  if [[ $PWD == $HOME/Projetos || $PWD == $HOME/Projetos/* ]]; then
+    export CLAUDE_CONFIG_DIR="$HOME/.claude-pessoal"
+  else
+    unset CLAUDE_CONFIG_DIR
+  fi
+}
+add-zsh-hook chpwd _claude_pick_account
+_claude_pick_account
+
+# bun completions
+[ -s "/home/pieroc/.bun/_bun" ] && source "/home/pieroc/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
