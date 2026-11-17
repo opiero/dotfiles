@@ -190,8 +190,8 @@ hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("hyprlock"), { description = "bloqu
 hl.bind("SUPER + CONTROL + V", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'clipse'"), { description = "abre o clipboard manager" })
 hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'lazydocker'"), { description = "abre o lazydocker" })
 hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'bluetui'"), { description = "abre o bluetooth" })
-hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"), { description = "bate o print da janela" })
-hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("hyprshot -m region"), { description = "bate o print da região" })
+hl.bind("PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m window"), { description = "bate o print da janela" })
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m region"), { description = "bate o print da região" })
 
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
@@ -310,4 +310,27 @@ hl.window_rule({
     match = { title = "^(Picture-in-Picture)$" },
 
     float = true,
+})
+
+hl.window_rule({
+    -- Overlay transparente do Untapped por cima do MTG Arena: sem blur/sombra/borda,
+    -- senão o Arena inteiro fica embaçado atrás dele.
+    name  = "untapped-overlay",
+    match = { class = "^steam_proton$", title = "^Untapped\\.gg Overlay$" },
+
+    float       = true,
+    no_blur     = true,
+    no_shadow   = true,
+    border_size = 0,
+    no_anim     = true,
+})
+
+hl.window_rule({
+    -- Bandeja do Wine (explorer.exe /desktop) no prefixo do Arena: o Waybar não mostra
+    -- ícones de bandeja do Wine, então ele cria uma barrinha flutuante. Esconde num
+    -- workspace especial (abrir: hyprctl dispatch 'hl.dsp.workspace.toggle_special("wine-tray")').
+    name  = "wine-tray-arena",
+    match = { class = "^steam_app_2141910$", title = "^$", float = true },
+
+    workspace = "special:wine-tray silent",
 })
