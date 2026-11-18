@@ -1,8 +1,9 @@
 # Walker (launcher, SUPER+SPACE) — só o que difere do padrão em /etc/xdg/walker/config.toml.
 # Prefixos (padrão do Walker): = calculadora | / arquivos | . símbolos/emoji
+#                              $ janelas abertas (pacote elephant-windows-bin)
 #                              @ busca na web | > rodar comando | ; lista de provedores
 theme = "dotfiles"
 selection_wrap = true
 
 [placeholders]
-"default" = { input = "Buscar apps…  (= calc · / arquivos · . emoji · @ web · > comando)", list = "Nada encontrado" }
+"default" = { input = "Buscar apps…  (= calc · / arquivos · . emoji · @ web · > comando · $ janela)", list = "Nada encontrado" }

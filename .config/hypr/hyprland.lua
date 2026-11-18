@@ -231,6 +231,7 @@ hl.bind("SUPER + SHIFT + BACKSPACE", toggle_gaps, { description = "liga/desliga 
 
 -- Menu de sistema (estilo Omarchy): sistema, captura, alternar, ferramentas, configs
 hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("~/.config/hypr/scripts/menu.sh"), { description = "abre o menu de sistema" })
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("walker -m windows"), { description = "busca uma janela aberta e vai até ela" })
 
 -- Mostra todos os keybinds num fzf (estilo Omarchy)
 hl.bind("SUPER + SHIFT + SLASH", hl.dsp.exec_cmd(terminal .. " --class floating-default -e ~/.config/hypr/scripts/keybinds.sh"), { description = "mostra todos os keybinds" })

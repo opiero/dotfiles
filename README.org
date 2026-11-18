@@ -20,7 +20,8 @@ Walker needs Elephant (its data provider) and one Elephant plugin per feature, a
 
 #+begin_src sh
 yay -S walker-bin elephant-bin elephant-desktopapplications-bin elephant-calc-bin \
-       elephant-files-bin elephant-symbols-bin elephant-websearch-bin elephant-runner-bin
+       elephant-files-bin elephant-symbols-bin elephant-websearch-bin elephant-runner-bin \
+       elephant-windows-bin
 elephant service enable                  # systemd user service, starts with the graphical session
 systemctl --user start elephant
 #+end_src
