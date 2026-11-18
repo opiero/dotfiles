@@ -34,7 +34,8 @@
   },
 
   "memory": {
-    "format": "  {used}MB"
+    "format": "󰍛  {used:0.1f}G",
+    "tooltip-format": "{used:0.1f} de {total:0.1f} GiB usados ({percentage}%)"
   },
 
   "tray": {
