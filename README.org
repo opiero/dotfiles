@@ -37,3 +37,17 @@ sudo pacman -S mako libnotify fzf wireplumber kitty hyprsunset
 - =fzf=: keybind viewer (=SUPER+SHIFT+/=, =.config/hypr/scripts/keybinds.sh=)
 - =wireplumber=: =wpctl=, used by the volume keys
 - =hyprsunset=: night light (scheduled in =hyprsunset.conf=, toggled from the system menu)
+
+** Keychron K2: F-keys first
+
+Linux drives the Keychron K2 with =hid_apple=, whose automatic Fn mode makes
+both =F1= and =Fn+F1= send the media key (screen brightness down). With
+=fnmode=2= the plain keys are F1–F12 and =Fn= gives the media functions. This
+lives outside the home dir, so stow doesn't cover it:
+
+#+begin_src sh
+echo 'options hid_apple fnmode=2' | sudo tee /etc/modprobe.d/hid_apple.conf
+sudo dracut-rebuild   # the option is copied into the initramfs
+# apply right away, without rebooting:
+echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
+#+end_src
