@@ -27,7 +27,7 @@ hl.monitor({
 local terminal    = "kitty"
 local fileManager = "dolphin"
 local browser     = "firefox"
-local menu        = "hyprlauncher"
+local menu        = "walker"
 local mainMod     = "SUPER"
 
 
@@ -40,6 +40,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprsunset")
     hl.exec_cmd("clipse -listen")
+    hl.exec_cmd("walker --gapplication-service")  -- deixa o launcher abrir na hora
 end)
 
 
@@ -212,14 +213,19 @@ end, { description = "troca os workspaces ativos entre os monitores" })
 
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"), { description = "alterna o split (horizontal/vertical)" })
 
--- Toggle de gaps (estilo Omarchy): zera os gaps (mantém a borda), ou volta pros padrões
-hl.bind("SUPER + SHIFT + BACKSPACE", function()
+-- Toggle de gaps (estilo Omarchy): zera os gaps (mantém a borda), ou volta pros padrões.
+-- Global pra o menu (scripts/menu.sh) chamar via: hyprctl eval 'toggle_gaps()'
+function toggle_gaps()
     local on = hl.get_config("general:gaps_out").top == 0
     hl.config({ general = {
         gaps_in     = on and default_gaps_in  or 0,
         gaps_out    = on and default_gaps_out or 0,
     } })
-end, { description = "liga/desliga os gaps entre janelas" })
+end
+hl.bind("SUPER + SHIFT + BACKSPACE", toggle_gaps, { description = "liga/desliga os gaps entre janelas" })
+
+-- Menu de sistema (estilo Omarchy): sistema, captura, alternar, ferramentas, configs
+hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("~/.config/hypr/scripts/menu.sh"), { description = "abre o menu de sistema" })
 
 -- Mostra todos os keybinds num fzf (estilo Omarchy)
 hl.bind("SUPER + SHIFT + SLASH", hl.dsp.exec_cmd(terminal .. " --class floating-default -e ~/.config/hypr/scripts/keybinds.sh"), { description = "mostra todos os keybinds" })
