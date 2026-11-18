@@ -230,6 +230,12 @@ hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }), { description 
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }), { description = "foca a janela de cima" })
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }), { description = "foca a janela de baixo" })
 
+-- Move a janela com mainMod + SHIFT + HJKL (vim-style)
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }),  { description = "move a janela pra esquerda" })
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }), { description = "move a janela pra direita" })
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }),    { description = "move a janela pra cima" })
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }),  { description = "move a janela pra baixo" })
+
 -- Troca de workspace com mainMod + [0-9]
 -- Move janela ativa para um workspace com mainMod + SHIFT + [0-9]
 for i = 1, 10 do
