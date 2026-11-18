@@ -8,3 +8,32 @@ I manage the various configuration files in this repo using [[https://www.gnu.or
 #+begin_src sh
 stow .
 #+end_src
+
+* Hyprland desktop extras
+
+Some pieces of the Hyprland setup depend on packages and services that =stow= doesn't handle.
+
+** Launcher and system menu (Walker)
+
+=SUPER+SPACE= opens [[https://github.com/abenz1267/walker][Walker]] and =SUPER+ALT+SPACE= opens the system menu (=.config/hypr/scripts/menu.sh=), which is built on =walker --dmenu=.
+Walker needs Elephant (its data provider) and one Elephant plugin per feature, all from the AUR:
+
+#+begin_src sh
+yay -S walker-bin elephant-bin elephant-desktopapplications-bin elephant-calc-bin \
+       elephant-files-bin elephant-symbols-bin elephant-websearch-bin elephant-runner-bin
+elephant service enable                  # systemd user service, starts with the graphical session
+systemctl --user start elephant
+#+end_src
+
+Hyprland starts =walker --gapplication-service= on login, so the launcher opens instantly.
+
+** Other dependencies
+
+#+begin_src sh
+sudo pacman -S mako libnotify fzf wireplumber kitty hyprsunset
+#+end_src
+
+- =mako= + =libnotify=: notifications and the volume OSD (=.config/hypr/scripts/volume.sh=)
+- =fzf=: keybind viewer (=SUPER+SHIFT+/=, =.config/hypr/scripts/keybinds.sh=)
+- =wireplumber=: =wpctl=, used by the volume keys
+- =hyprsunset=: night light (scheduled in =hyprsunset.conf=, toggled from the system menu)
