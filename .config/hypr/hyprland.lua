@@ -40,7 +40,12 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprsunset")
     hl.exec_cmd("clipse -listen")
-    hl.exec_cmd("walker --gapplication-service")  -- deixa o launcher abrir na hora
+    -- Serviço do launcher (abre na hora). Fica longe da NVIDIA: o GTK usa Vulkan
+    -- por padrão e o único driver Vulkan aqui é o da NVIDIA, que dorme quando
+    -- parada e levava ~2s pra acordar ao abrir. GL + EGL do Mesa = só a Intel.
+    hl.exec_cmd("env GSK_RENDERER=gl"
+        .. " __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json"
+        .. " __GLX_VENDOR_LIBRARY_NAME=mesa walker --gapplication-service")
 end)
 
 
