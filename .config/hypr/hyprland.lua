@@ -184,7 +184,7 @@ hl.bind(mainMod .. " + W", hl.dsp.window.close(), { description = "fecha a janel
 hl.bind("SUPER + SHIFT + O", hl.dsp.exec_cmd("obsidian"), { description = "abre o obsidian" })
 hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(browser), { description = "abre o navegador" })
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen(), { description = "deixa a janela em tela cheia" })
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"), { description = "sai do Hyprland" })
 hl.bind(mainMod .. " + O", hl.dsp.workspace.move({ monitor = "+1" }), { description = "move o workspace para o monitor seguinte" })
 hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("hyprlock"), { description = "bloqueia a tela" })
 hl.bind("SUPER + CONTROL + V", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'clipse'"), { description = "abre o clipboard manager" })
@@ -193,8 +193,8 @@ hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(terminal .. " --class floating-defa
 hl.bind("PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m window"), { description = "bate o print da janela" })
 hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m region"), { description = "bate o print da região" })
 
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager), { description = "abre o gerenciador de arquivos" })
+hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }), { description = "alterna a janela entre flutuante e tiled" })
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu), { description = "abre o launcher" })
 -- Troca os workspaces ativos entre o monitor em foco e o próximo
 -- (com 2 monitores: o workspace do A vai pro B e o do B vai pro A)
@@ -210,7 +210,7 @@ hl.bind(mainMod .. " + P", function()
     end
 end, { description = "troca os workspaces ativos entre os monitores" })
 
-hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"), { description = "alterna o split (horizontal/vertical)" })
 
 -- Toggle de gaps (estilo Omarchy): zera os gaps (mantém a borda), ou volta pros padrões
 hl.bind("SUPER + SHIFT + BACKSPACE", function()
@@ -221,44 +221,47 @@ hl.bind("SUPER + SHIFT + BACKSPACE", function()
     } })
 end, { description = "liga/desliga os gaps entre janelas" })
 
+-- Mostra todos os keybinds num fzf (estilo Omarchy)
+hl.bind("SUPER + SHIFT + SLASH", hl.dsp.exec_cmd(terminal .. " --class floating-default -e ~/.config/hypr/scripts/keybinds.sh"), { description = "mostra todos os keybinds" })
+
 -- Move focus com mainMod + HJKL (vim-style)
-hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }), { description = "foca a janela à esquerda" })
+hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }), { description = "foca a janela à direita" })
+hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }), { description = "foca a janela de cima" })
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }), { description = "foca a janela de baixo" })
 
 -- Troca de workspace com mainMod + [0-9]
 -- Move janela ativa para um workspace com mainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10
-    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "vai pro workspace " .. i })
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }), { description = "move a janela pro workspace " .. i })
 end
 
 -- Workspace especial (scratchpad)
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"), { description = "mostra/esconde o scratchpad" })
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }), { description = "move a janela pro scratchpad" })
 
 -- Scroll entre workspaces com mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "próximo workspace" })
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }), { description = "workspace anterior" })
 
 -- Mover/redimensionar janelas com mainMod + botão do mouse
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true, description = "arrasta a janela" })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "redimensiona a janela" })
 
 -- Teclas multimídia
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "aumenta o volume" })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "diminui o volume" })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true, description = "muta o som" })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true, description = "muta o microfone" })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true, description = "aumenta o brilho" })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true, description = "diminui o brilho" })
 
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true, description = "próxima música" })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "pausa a música" })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "toca a música" })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true, description = "música anterior" })
 
 
 --------------------------------
