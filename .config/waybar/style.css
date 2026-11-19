@@ -29,3 +29,15 @@ window#waybar {
 #clock, #battery, #network, #cpu, #memory {
   padding: 0 10px;
 }
+
+#battery.charging, #battery.plugged, #battery.full {
+  color: #a6e3a1;
+}
+
+#battery.warning:not(.charging):not(.plugged) {
+  color: #f9e2af;
+}
+
+#battery.critical:not(.charging):not(.plugged) {
+  color: #f38ba8;
+}

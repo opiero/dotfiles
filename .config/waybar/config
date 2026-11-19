@@ -24,9 +24,50 @@
   },
 
   "battery": {
-    "format": "{capacity}%",
-    "format-charging": " {capacity}%",
-    "format-full": "  {capacity}%"
+    "interval": 30,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "format": "{icon}  {capacity}%",
+    "format-charging": "{icon}  {capacity}%",
+    "format-plugged": "{icon}  {capacity}%",
+    "format-full": "{icon}  {capacity}%",
+    "format-icons": {
+      "default": [
+        "󰂎",
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ],
+      "charging": [
+        "󰢟",
+        "󰢜",
+        "󰂆",
+        "󰂇",
+        "󰂈",
+        "󰢝",
+        "󰂉",
+        "󰢞",
+        "󰂊",
+        "󰂋",
+        "󰂅"
+      ],
+      "plugged": [
+        "󰚥"
+      ],
+      "full": [
+        "󰚥"
+      ]
+    },
+    "tooltip-format": "{timeTo}\n{power:.1f} W"
   },
 
   "cpu": {
