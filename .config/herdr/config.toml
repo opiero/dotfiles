@@ -33,6 +33,10 @@ focus_pane_up = ["prefix+k", "ctrl+k"]
 focus_pane_right = ["prefix+l", "ctrl+l"]
 previous_tab = ["prefix+p", "alt+shift+h"]
 next_tab = ["prefix+n", "alt+shift+l"]
+# alt+shift+j/k entre agentes (prefix+j/k já é foco de painel)
+previous_agent = "alt+shift+k"
+next_agent = "alt+shift+j"
+goto = "prefix+alt+g"   # Go to nativo; prefix+g vira o picker fzf
 
 # Plugins (instalados fixos nos commits auditados em 2026-11-06)
 [[keys.command]]
@@ -55,7 +59,7 @@ claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]
 [[keys.command]]
 key = "prefix+g"
 type = "popup"
-command = "~/.config/herdr/scripts/agent-picker.sh"
+command = "/home/pieroc/.config/herdr/scripts/agent-picker.sh"
 description = "agent picker (fzf)"
 width = "85%"
 height = "70%"
