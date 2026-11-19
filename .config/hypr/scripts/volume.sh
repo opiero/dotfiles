@@ -6,12 +6,15 @@ set -euo pipefail
 sink=@DEFAULT_AUDIO_SINK@
 source=@DEFAULT_AUDIO_SOURCE@
 
+# O OSD do sink é mostrado pelo volume-watch.sh (cobre também os botões do headphone
+# bluetooth); aqui só muda o volume. O do microfone continua sendo mostrado aqui.
 case "${1:-}" in
-    up)       dev=$sink;   wpctl set-volume -l 1 "$dev" 5%+ ;;
-    down)     dev=$sink;   wpctl set-volume "$dev" 5%- ;;
-    mute)     dev=$sink;   wpctl set-mute "$dev" toggle ;;
+    up)       wpctl set-volume -l 1 "$sink" 5%+; exit 0 ;;
+    down)     wpctl set-volume "$sink" 5%-; exit 0 ;;
+    mute)     wpctl set-mute "$sink" toggle; exit 0 ;;
+    osd)      dev=$sink ;;
     mic-mute) dev=$source; wpctl set-mute "$dev" toggle ;;
-    *) echo "uso: $0 up|down|mute|mic-mute" >&2; exit 1 ;;
+    *) echo "uso: $0 up|down|mute|mic-mute|osd" >&2; exit 1 ;;
 esac
 
 # "Volume: 0.45" ou "Volume: 0.45 [MUTED]"
