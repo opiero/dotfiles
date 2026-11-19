@@ -42,6 +42,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("clipse -listen")
     -- OSD de volume para qualquer mudança (inclusive botões do headphone bluetooth)
     hl.exec_cmd("~/.config/hypr/scripts/volume-watch.sh")
+    -- Notificação de bateria baixa (20%, 10% e 5%)
+    hl.exec_cmd("~/.config/hypr/scripts/battery-watch.sh")
     -- Serviço do launcher (abre na hora). Fica longe da NVIDIA: o GTK usa Vulkan
     -- por padrão e o único driver Vulkan aqui é o da NVIDIA, que dorme quando
     -- parada e levava ~2s pra acordar ao abrir. GL + EGL do Mesa = só a Intel.
