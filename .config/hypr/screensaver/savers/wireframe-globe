@@ -25,14 +25,15 @@ def gradient(stops, n):
     return out
 
 FRONT = gradient(["#1f6f5a", "#3fbf8f", "#9ff5cf", "#eafff5"], 8)
-BACK, SHELL, EQUATOR = hex2rgb("#173a4a"), hex2rgb("#0e2230"), hex2rgb("#ffd166")
+BACK, SHELL, SHELL_DARK, EQUATOR = (hex2rgb(h) for h in ("#173a4a", "#0e2230", "#0a1820", "#ffd166"))
 
 def sgr(rgb): return "\x1b[38;2;%d;%d;%dm" % rgb
 
-def slope_char(dx, dy):           # dy cresce para baixo (coordenada de tela)
-    if abs(dy) < 0.4 * abs(dx): return "─"
-    if abs(dx) < 0.4 * abs(dy): return "│"
-    return "╲" if dx * dy > 0 else "╱"
+def slope_char(dx, dy, aspect):  # dx, dy em células; dy cresce para baixo
+    a = math.atan2(dy * aspect, dx)          # ângulo real na tela (original: dy * 2)
+    if abs(math.sin(a)) < 0.38: return "─"
+    if abs(math.cos(a)) < 0.38: return "│"
+    return "╲" if (dx > 0) == (dy > 0) else "╱"
 
 def build_wires(rc):
     """Pontos (x, y, z, tx, ty, tz, tipo) na esfera unitária; densidade acompanha o raio."""
@@ -52,18 +53,16 @@ def build_wires(rc):
     return pts
 
 def build_shell(cols, rows, cx, cy, rr, rc):
-    """Casca estática (a luz é fixa na tela): células com '░' onde a esfera está iluminada."""
+    """Casca estática (a luz é fixa na tela), atrás de tudo: '░' onde está iluminada."""
     L = math.sqrt(sum(v * v for v in LIGHT)); lx, ly, lz = (v / L for v in LIGHT)
     shell = {}
     for sy in range(rows):
         for sx in range(cols):
-            x, y = (sx - cx) / rc, -(sy - cy) / rr
+            x, y = (sx + 0.5 - cx) / rc, -(sy + 0.5 - cy) / rr
             d = x * x + y * y
-            if d > 1: continue
-            z = -math.sqrt(1 - d)                         # frente = z negativo
-            lam = max(0.0, x * lx + y * ly + z * lz)
-            spec = lam ** 24
-            if lam * 0.8 + spec > 0.45: shell[(sx, sy)] = "░"
+            if d >= 1: continue
+            l = max(0.0, x * lx + y * ly - math.sqrt(1 - d) * lz) * 0.78
+            shell[(sx, sy)] = ("░" if l > 0.45 else " ", SHELL if l > 0.6 else SHELL_DARK)
     return shell
 
 def cell_aspect():
@@ -91,7 +90,7 @@ def main():
             aspect = cell_aspect()                            # p/ o globo sair redondo de verdade
             rr = rows * SIZE / 2; rc = rr * aspect
             if rc > cols * 0.45: rc = cols * 0.45; rr = rc / aspect
-            cx, cy = (cols - 1) / 2, (rows - 1) / 2
+            cx, cy = cols / 2, rows / 2
             wires = build_wires(rc); shell = build_shell(cols, rows, cx, cy, rr, rc)
             out.write("\x1b[2J")
         a = (frame_start - t0) * SPIN; ca, sa = math.cos(a), math.sin(a)
@@ -99,16 +98,16 @@ def main():
         for (wx, wy, wz, tx, ty, tz, kind) in wires:
             x0 = wx * ca + wz * sa; z = -wx * sa + wz * ca      # gira no eixo
             x = x0 * ct - wy * st; y = x0 * st + wy * ct        # inclina o eixo
-            sx = int(round(cx + x * rc)); sy = int(round(cy - y * rr))
+            sx = math.floor(cx + x * rc); sy = math.floor(cy - y * rr)
             if not (0 <= sx < cols and 0 <= sy < rows): continue
             if z < 0:
                 depth = 2 - z
                 tx0 = tx * ca + tz * sa
                 dx = (tx0 * ct - ty * st) * rc; dy = -(tx0 * st + ty * ct) * rr
                 color = EQUATOR if kind == 2 else FRONT[min(7, int((-z * 0.75 + 0.25) * 8))]
-                cell = (depth, slope_char(dx, dy), color)
+                cell = (depth, slope_char(dx, dy, rr and rc / rr), color)
             else:
-                cell = (1 - z, "·", BACK)
+                cell = (1 - z, "·", BACK)                 # lado de trás: pontinhos apagados
             old = zbuf.get((sx, sy))
             if old is None or cell[0] > old[0]: zbuf[(sx, sy)] = cell
         lines = []; last = None
@@ -117,7 +116,7 @@ def main():
             for sx in range(cols):
                 c = zbuf.get((sx, sy))
                 if c: ch, col = c[1], c[2]
-                elif (sx, sy) in shell: ch, col = "░", SHELL
+                elif (sx, sy) in shell: ch, col = shell[(sx, sy)]
                 else: row.append(" "); continue
                 if col != last: row.append(sgr(col)); last = col
                 row.append(ch)
