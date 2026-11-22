@@ -5,10 +5,11 @@ Port do "wireframe-globe" de ascii-magic-art (Kailash, MIT):
 https://github.com/kailashsr38/ascii-magic-art/blob/main/pieces/wireframe-globe.js
 Projeção ortográfica, eixo inclinado 23,5°, z-buffer, caractere pela direção da linha.
 """
-import math, os, signal, sys, time
+import fcntl, math, os, signal, struct, sys, termios, time
 
 FPS = 30
-SPIN = 0.6            # rad/s em torno do eixo
+SPIN = 0.3            # rad/s em torno do eixo (~21s por volta; o original usa 0.6)
+SIZE = 0.62           # diâmetro do globo como fração da altura da tela
 TILT = 0.41           # ~23,5°
 LIGHT = (-0.72, 0.55, -0.42)
 
@@ -65,6 +66,16 @@ def build_shell(cols, rows, cx, cy, rr, rc):
             if lam * 0.8 + spec > 0.45: shell[(sx, sy)] = "░"
     return shell
 
+def cell_aspect():
+    """Altura/largura de uma célula em pixels (o kitty informa via TIOCGWINSZ)."""
+    try:
+        rows, cols, xpx, ypx = struct.unpack("HHHH", fcntl.ioctl(sys.stdout.fileno(), termios.TIOCGWINSZ, b"\0" * 8))
+        if xpx and ypx and rows and cols:
+            return (ypx / rows) / (xpx / cols)
+    except OSError:
+        pass
+    return 2.0
+
 def main():
     out = sys.stdout
     def bye(*_):
@@ -77,7 +88,9 @@ def main():
         cur = os.get_terminal_size()
         if cur != size:                                   # (re)calcula tudo que depende do tamanho
             size = cur; cols, rows = cur.columns, cur.lines
-            rr = min(rows * 0.46, cols * 0.23); rc = 2 * rr   # célula é ~2x mais alta que larga
+            aspect = cell_aspect()                            # p/ o globo sair redondo de verdade
+            rr = rows * SIZE / 2; rc = rr * aspect
+            if rc > cols * 0.45: rc = cols * 0.45; rr = rc / aspect
             cx, cy = (cols - 1) / 2, (rows - 1) / 2
             wires = build_wires(rc); shell = build_shell(cols, rows, cx, cy, rr, rc)
             out.write("\x1b[2J")
