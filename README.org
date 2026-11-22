@@ -39,19 +39,22 @@ sudo pacman -S mako libnotify fzf wireplumber kitty hyprsunset
 - =wireplumber=: =wpctl=, used by the volume keys
 - =hyprsunset=: night light (scheduled in =hyprsunset.conf=, toggled from the system menu)
 
-** Screensaver (Omarchy-style)
+** Screensaver
 
-After 2.5 min idle, =hypridle= opens a fullscreen kitty on every monitor running
-[[https://github.com/ChrisBuilds/terminaltexteffects][TerminalTextEffects]] over
-=.config/hypr/screensaver/logo.txt= (random effect, in a loop); any key or mouse
-movement dismisses it. At 5 min the session locks with =hyprlock=. It can also be
-started from the system menu (Sistema → Screensaver).
-Which effects get drawn is set in =.config/hypr/screensaver/effects.conf= (comment a line to
-disable it), or from Sistema → Efeitos do screensaver, which also previews each effect.
+After 2.5 min idle, =hypridle= opens a fullscreen kitty on every monitor that plays one of
+the animations in =.config/hypr/screensaver/savers/= (each one is a standalone program that
+draws to the terminal until killed), switching every 2 min; any key or mouse movement
+dismisses it. At 5 min the session locks with =hyprlock=. It can also be started from the
+system menu (Sistema → Screensaver).
+
+Which animations get picked is set in =savers.conf= (comment a line to disable it), or from
+Sistema → Animações do screensaver, which also previews each one. To add an animation, drop
+an executable in =savers/=.
+
+- =wireframe-globe=: port of [[https://github.com/kailashsr38/ascii-magic-art][ascii-magic-art]]'s wireframe globe (MIT).
 
 #+begin_src sh
-sudo pacman -S hypridle hyprlock jq
-uv tool install terminaltexteffects     # provides ~/.local/bin/tte
+sudo pacman -S hypridle hyprlock jq python
 #+end_src
 
 Hyprland starts =hypridle= on login; timings live in =.config/hypr/hypridle.conf=.

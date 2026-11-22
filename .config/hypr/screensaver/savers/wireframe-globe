@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Globo em wireframe girando, ocupando o terminal inteiro.
+
+Port do "wireframe-globe" de ascii-magic-art (Kailash, MIT):
+https://github.com/kailashsr38/ascii-magic-art/blob/main/pieces/wireframe-globe.js
+Projeção ortográfica, eixo inclinado 23,5°, z-buffer, caractere pela direção da linha.
+"""
+import math, os, signal, sys, time
+
+FPS = 30
+SPIN = 0.6            # rad/s em torno do eixo
+TILT = 0.41           # ~23,5°
+LIGHT = (-0.72, 0.55, -0.42)
+
+def hex2rgb(h): return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+
+def gradient(stops, n):
+    stops = [hex2rgb(s) for s in stops]
+    out = []
+    for i in range(n):
+        t = i / (n - 1) * (len(stops) - 1)
+        k = min(int(t), len(stops) - 2); f = t - k
+        out.append(tuple(round(a + (b - a) * f) for a, b in zip(stops[k], stops[k + 1])))
+    return out
+
+FRONT = gradient(["#1f6f5a", "#3fbf8f", "#9ff5cf", "#eafff5"], 8)
+BACK, SHELL, EQUATOR = hex2rgb("#173a4a"), hex2rgb("#0e2230"), hex2rgb("#ffd166")
+
+def sgr(rgb): return "\x1b[38;2;%d;%d;%dm" % rgb
+
+def slope_char(dx, dy):           # dy cresce para baixo (coordenada de tela)
+    if abs(dy) < 0.4 * abs(dx): return "─"
+    if abs(dx) < 0.4 * abs(dy): return "│"
+    return "╲" if dx * dy > 0 else "╱"
+
+def build_wires(rc):
+    """Pontos (x, y, z, tx, ty, tz, tipo) na esfera unitária; densidade acompanha o raio."""
+    n = max(260, int(2 * math.pi * rc * 1.6))
+    pts = []
+    for k in range(6):                                   # meridianos (círculos máximos a cada 30°)
+        lon = math.radians(30 * k); cl, sl = math.cos(lon), math.sin(lon)
+        for i in range(n):
+            th = 2 * math.pi * i / n; c, s = math.cos(th), math.sin(th)
+            pts.append((c * cl, s, c * sl, -s * cl, c, -s * sl, 0))
+    for lat in (-60, -30, 0, 30, 60):                    # paralelos; 0 = equador
+        ph = math.radians(lat); cp, sp = math.cos(ph), math.sin(ph)
+        m = int(math.ceil(n * cp)) + 20
+        for i in range(m):
+            la = 2 * math.pi * i / m; c, s = math.cos(la), math.sin(la)
+            pts.append((cp * c, sp, cp * s, -s, 0.0, c, 2 if lat == 0 else 1))
+    return pts
+
+def build_shell(cols, rows, cx, cy, rr, rc):
+    """Casca estática (a luz é fixa na tela): células com '░' onde a esfera está iluminada."""
+    L = math.sqrt(sum(v * v for v in LIGHT)); lx, ly, lz = (v / L for v in LIGHT)
+    shell = {}
+    for sy in range(rows):
+        for sx in range(cols):
+            x, y = (sx - cx) / rc, -(sy - cy) / rr
+            d = x * x + y * y
+            if d > 1: continue
+            z = -math.sqrt(1 - d)                         # frente = z negativo
+            lam = max(0.0, x * lx + y * ly + z * lz)
+            spec = lam ** 24
+            if lam * 0.8 + spec > 0.45: shell[(sx, sy)] = "░"
+    return shell
+
+def main():
+    out = sys.stdout
+    def bye(*_):
+        out.write("\x1b[0m\x1b[?25h"); out.flush(); sys.exit(0)
+    signal.signal(signal.SIGTERM, bye); signal.signal(signal.SIGINT, bye); signal.signal(signal.SIGHUP, bye)
+    out.write("\x1b[?25l\x1b[2J")
+    size = None; t0 = time.monotonic(); ct, st = math.cos(TILT), math.sin(TILT)
+    while True:
+        frame_start = time.monotonic()
+        cur = os.get_terminal_size()
+        if cur != size:                                   # (re)calcula tudo que depende do tamanho
+            size = cur; cols, rows = cur.columns, cur.lines
+            rr = min(rows * 0.46, cols * 0.23); rc = 2 * rr   # célula é ~2x mais alta que larga
+            cx, cy = (cols - 1) / 2, (rows - 1) / 2
+            wires = build_wires(rc); shell = build_shell(cols, rows, cx, cy, rr, rc)
+            out.write("\x1b[2J")
+        a = (frame_start - t0) * SPIN; ca, sa = math.cos(a), math.sin(a)
+        zbuf = {}
+        for (wx, wy, wz, tx, ty, tz, kind) in wires:
+            x0 = wx * ca + wz * sa; z = -wx * sa + wz * ca      # gira no eixo
+            x = x0 * ct - wy * st; y = x0 * st + wy * ct        # inclina o eixo
+            sx = int(round(cx + x * rc)); sy = int(round(cy - y * rr))
+            if not (0 <= sx < cols and 0 <= sy < rows): continue
+            if z < 0:
+                depth = 2 - z
+                tx0 = tx * ca + tz * sa
+                dx = (tx0 * ct - ty * st) * rc; dy = -(tx0 * st + ty * ct) * rr
+                color = EQUATOR if kind == 2 else FRONT[min(7, int((-z * 0.75 + 0.25) * 8))]
+                cell = (depth, slope_char(dx, dy), color)
+            else:
+                cell = (1 - z, "·", BACK)
+            old = zbuf.get((sx, sy))
+            if old is None or cell[0] > old[0]: zbuf[(sx, sy)] = cell
+        lines = []; last = None
+        for sy in range(rows):
+            row = []
+            for sx in range(cols):
+                c = zbuf.get((sx, sy))
+                if c: ch, col = c[1], c[2]
+                elif (sx, sy) in shell: ch, col = "░", SHELL
+                else: row.append(" "); continue
+                if col != last: row.append(sgr(col)); last = col
+                row.append(ch)
+            lines.append("".join(row))
+        out.write("\x1b[H" + "\n".join(lines)); out.flush()
+        time.sleep(max(0, 1 / FPS - (time.monotonic() - frame_start)))
+
+if __name__ == "__main__":
+    main()
