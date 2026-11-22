@@ -5,7 +5,7 @@
 
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["network", "battery", "cpu", "memory", "tray"],
+  "modules-right": ["pulseaudio", "network", "battery", "cpu", "memory", "tray"],
 
   "hyprland/workspaces": {
     "disable-scroll": true,
@@ -15,6 +15,28 @@
   "clock": {
     "format": "{:%H:%M}",
     "tooltip-format": "{:%A, %d %B %Y}"
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "󰝟  mudo",
+    "format-bluetooth": "󰂰  {volume}%",
+    "format-bluetooth-muted": "󰂰  mudo",
+    "format-icons": {
+      "headphone": "󰋋",
+      "headset": "󰋎",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "tooltip-format": "{desc}\n{volume}%",
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "~/.config/hypr/scripts/volume.sh mute",
+    "on-scroll-up": "~/.config/hypr/scripts/volume.sh up",
+    "on-scroll-down": "~/.config/hypr/scripts/volume.sh down"
   },
 
   "network": {
