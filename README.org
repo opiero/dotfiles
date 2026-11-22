@@ -46,6 +46,8 @@ After 2.5 min idle, =hypridle= opens a fullscreen kitty on every monitor running
 =.config/hypr/screensaver/logo.txt= (random effect, in a loop); any key or mouse
 movement dismisses it. At 5 min the session locks with =hyprlock=. It can also be
 started from the system menu (Sistema → Screensaver).
+Which effects get drawn is set in =.config/hypr/screensaver/effects.conf= (comment a line to
+disable it), or from Sistema → Efeitos do screensaver, which also previews each effect.
 
 #+begin_src sh
 sudo pacman -S hypridle hyprlock jq

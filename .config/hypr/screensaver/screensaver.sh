@@ -3,6 +3,7 @@
 # Sai com qualquer tecla, movimento/clique do mouse ou se o foco sair do screensaver.
 logo=~/.config/hypr/screensaver/logo.txt
 tte=~/.local/bin/tte
+conf=~/.config/hypr/screensaver/effects.conf
 
 cleanup() {
     printf '\e[?1003l\e[?1000l\e[?25h'
@@ -22,9 +23,17 @@ start=$SECONDS
 
 while true; do
     clear
+    # Sorteia entre os efeitos ligados em effects.conf (relido a cada volta);
+    # se a lista estiver vazia, cai no sorteio de todos do tte.
+    mapfile -t effects < <(grep -vE '^[[:space:]]*(#|$)' "$conf" 2>/dev/null)
+    if (( ${#effects[@]} )); then
+        effect=(${effects[RANDOM % ${#effects[@]}]})
+    else
+        effect=(--random-effect --exclude-effects dev_worm)
+    fi
     "$tte" -i "$logo" --frame-rate 120 \
         --canvas-width 0 --canvas-height 0 --anchor-canvas c --anchor-text c \
-        --random-effect --exclude-effects dev_worm --no-eol --no-restore-cursor &
+        --no-eol --no-restore-cursor "${effect[@]}" &
     pid=$!
     while kill -0 "$pid" 2>/dev/null; do
         read -rsn1 -t 1 && cleanup
