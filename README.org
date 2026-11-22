@@ -41,23 +41,29 @@ sudo pacman -S mako libnotify fzf wireplumber kitty hyprsunset
 
 ** Screensaver
 
-After 2.5 min idle, =hypridle= opens a fullscreen kitty on every monitor that plays one of
-the animations in =.config/hypr/screensaver/savers/= (each one is a standalone program that
-draws to the terminal until killed), switching every 2 min; any key or mouse movement
-dismisses it. At 5 min the session locks with =hyprlock=. It can also be started from the
-system menu (Sistema → Screensaver).
+Timings (=.config/hypr/hypridle.conf=): when the screen is locked and you've been away for
+3 min, the screensaver starts on the lock screen; after 10 min idle the session locks and
+the screensaver starts right away. Any key or mouse movement brings back the normal lock
+screen.
+
+The lock screen hides every window, so there the animation is drawn as text:
+=screensaver/lock-screensaver.sh= runs a saver with =--pango= and it writes each frame
+(Pango markup on black) to =$XDG_RUNTIME_DIR/hypr-screensaver.pango=, which the last label
+in =hyprlock.conf= re-reads every 125 ms. Unlocked, the system menu (Sistema → Screensaver)
+opens it fullscreen in kitty on every monitor instead.
 
 Which animations get picked is set in =savers.conf= (comment a line to disable it), or from
 Sistema → Animações do screensaver, which also previews each one. To add an animation, drop
-an executable in =savers/=.
+an executable in =savers/=; to make it work on the lock screen too, it must accept
+=--pango FILE --cols C --rows R --aspect A --fps F=.
 
 - =wireframe-globe=: port of [[https://github.com/kailashsr38/ascii-magic-art][ascii-magic-art]]'s wireframe globe (MIT).
 
 #+begin_src sh
-sudo pacman -S hypridle hyprlock jq python
+sudo pacman -S hypridle hyprlock jq python python-gobject python-cairo
 #+end_src
 
-Hyprland starts =hypridle= on login; timings live in =.config/hypr/hypridle.conf=.
+Hyprland starts =hypridle= on login.
 
 ** Keychron K2: F-keys first
 

@@ -4,8 +4,13 @@
 Port do "wireframe-globe" de ascii-magic-art (Kailash, MIT):
 https://github.com/kailashsr38/ascii-magic-art/blob/main/pieces/wireframe-globe.js
 Projeção ortográfica, eixo inclinado 23,5°, z-buffer, caractere pela direção da linha.
+
+Uso: wireframe-globe                      desenha no terminal (screensaver do kitty)
+     wireframe-globe --pango ARQ --cols C --rows R --aspect A [--fps F]
+                                         escreve cada quadro em ARQ como Pango markup
+                                         (lido por um label do hyprlock com a tela bloqueada)
 """
-import fcntl, math, os, signal, struct, sys, termios, time
+import argparse, fcntl, html, math, os, signal, struct, sys, termios, time
 
 FPS = 30
 SPIN = 0.3            # rad/s em torno do eixo (~21s por volta; o original usa 0.6)
@@ -75,54 +80,110 @@ def cell_aspect():
         pass
     return 2.0
 
-def main():
-    out = sys.stdout
-    def bye(*_):
-        out.write("\x1b[0m\x1b[?25h"); out.flush(); sys.exit(0)
-    signal.signal(signal.SIGTERM, bye); signal.signal(signal.SIGINT, bye); signal.signal(signal.SIGHUP, bye)
-    out.write("\x1b[?25l\x1b[2J")
-    size = None; t0 = time.monotonic(); ct, st = math.cos(TILT), math.sin(TILT)
-    while True:
-        frame_start = time.monotonic()
-        cur = os.get_terminal_size()
-        if cur != size:                                   # (re)calcula tudo que depende do tamanho
-            size = cur; cols, rows = cur.columns, cur.lines
-            aspect = cell_aspect()                            # p/ o globo sair redondo de verdade
-            rr = rows * SIZE / 2; rc = rr * aspect
-            if rc > cols * 0.45: rc = cols * 0.45; rr = rc / aspect
-            cx, cy = cols / 2, rows / 2
-            wires = build_wires(rc); shell = build_shell(cols, rows, cx, cy, rr, rc)
-            out.write("\x1b[2J")
-        a = (frame_start - t0) * SPIN; ca, sa = math.cos(a), math.sin(a)
+class Globe:
+    def __init__(self, cols, rows, aspect):
+        self.cols, self.rows, self.aspect = cols, rows, aspect
+        rr = rows * SIZE / 2; rc = rr * aspect                # rc/rr = aspect -> redondo de verdade
+        if rc > cols * 0.45: rc = cols * 0.45; rr = rc / aspect
+        self.rr, self.rc, self.cx, self.cy = rr, rc, cols / 2, rows / 2
+        self.wires = build_wires(rc)
+        self.shell = build_shell(cols, rows, self.cx, self.cy, rr, rc)
+
+    def frame(self, t):
+        """Linhas de [(char, rgb|None)] para o instante t (s)."""
+        cols, rows, rr, rc, cx, cy = self.cols, self.rows, self.rr, self.rc, self.cx, self.cy
+        ct, st = math.cos(TILT), math.sin(TILT)
+        a = t * SPIN; ca, sa = math.cos(a), math.sin(a)
         zbuf = {}
-        for (wx, wy, wz, tx, ty, tz, kind) in wires:
+        for (wx, wy, wz, tx, ty, tz, kind) in self.wires:
             x0 = wx * ca + wz * sa; z = -wx * sa + wz * ca      # gira no eixo
             x = x0 * ct - wy * st; y = x0 * st + wy * ct        # inclina o eixo
             sx = math.floor(cx + x * rc); sy = math.floor(cy - y * rr)
             if not (0 <= sx < cols and 0 <= sy < rows): continue
             if z < 0:
-                depth = 2 - z
                 tx0 = tx * ca + tz * sa
                 dx = (tx0 * ct - ty * st) * rc; dy = -(tx0 * st + ty * ct) * rr
                 color = EQUATOR if kind == 2 else FRONT[min(7, int((-z * 0.75 + 0.25) * 8))]
-                cell = (depth, slope_char(dx, dy, rr and rc / rr), color)
+                cell = (2 - z, slope_char(dx, dy, self.aspect), color)
             else:
                 cell = (1 - z, "·", BACK)                 # lado de trás: pontinhos apagados
             old = zbuf.get((sx, sy))
             if old is None or cell[0] > old[0]: zbuf[(sx, sy)] = cell
-        lines = []; last = None
+        out = []
         for sy in range(rows):
             row = []
             for sx in range(cols):
                 c = zbuf.get((sx, sy))
-                if c: ch, col = c[1], c[2]
-                elif (sx, sy) in shell: ch, col = shell[(sx, sy)]
-                else: row.append(" "); continue
-                if col != last: row.append(sgr(col)); last = col
-                row.append(ch)
-            lines.append("".join(row))
-        out.write("\x1b[H" + "\n".join(lines)); out.flush()
+                if c: row.append((c[1], c[2]))
+                elif (sx, sy) in self.shell: row.append(self.shell[(sx, sy)])
+                else: row.append((" ", None))
+            out.append(row)
+        return out
+
+def to_ansi(lines):
+    out, last = [], None
+    for row in lines:
+        parts = []
+        for ch, col in row:
+            if col is not None and col != last: parts.append(sgr(col)); last = col
+            parts.append(ch)
+        out.append("".join(parts))
+    return "\x1b[H" + "\n".join(out)
+
+def to_pango(lines):
+    """Tudo sobre fundo preto (cobre a tela de bloqueio); um <span> por troca de cor."""
+    out = ['<span background="#000000" foreground="#000000">']
+    for row in lines:
+        last, run = None, []
+        def flush():
+            if run:
+                txt = html.escape("".join(run), quote=False)
+                out.append(txt if last is None else '<span foreground="#%02x%02x%02x">%s</span>' % (*last, txt))
+        for ch, col in row:
+            col = None if ch == " " else col
+            if col != last: flush(); last, run = col, []
+            run.append(ch)
+        flush(); out.append("\n")
+    out[-1] = "</span>"
+    return "".join(out)
+
+def run_terminal():
+    out = sys.stdout
+    def bye(*_):
+        out.write("\x1b[0m\x1b[?25h"); out.flush(); sys.exit(0)
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP): signal.signal(sig, bye)
+    out.write("\x1b[?25l\x1b[2J")
+    size, globe, t0 = None, None, time.monotonic()
+    while True:
+        frame_start = time.monotonic()
+        cur = os.get_terminal_size()
+        if cur != size:                                   # (re)calcula tudo que depende do tamanho
+            size = cur; globe = Globe(cur.columns, cur.lines, cell_aspect())
+            out.write("\x1b[2J")
+        out.write(to_ansi(globe.frame(frame_start - t0))); out.flush()
         time.sleep(max(0, 1 / FPS - (time.monotonic() - frame_start)))
+
+def run_pango(path, cols, rows, aspect, fps):
+    def bye(*_):
+        try: os.unlink(path)
+        except OSError: pass
+        sys.exit(0)
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP): signal.signal(sig, bye)
+    globe, t0, tmp = Globe(cols, rows, aspect), time.monotonic(), path + ".tmp"
+    while True:
+        frame_start = time.monotonic()
+        with open(tmp, "w") as f: f.write(to_pango(globe.frame(frame_start - t0)))
+        os.replace(tmp, path)                             # troca atômica: o hyprlock nunca lê meio quadro
+        time.sleep(max(0, 1 / fps - (time.monotonic() - frame_start)))
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pango"); ap.add_argument("--cols", type=int, default=120)
+    ap.add_argument("--rows", type=int, default=40); ap.add_argument("--aspect", type=float, default=2.4)
+    ap.add_argument("--fps", type=float, default=10)
+    a = ap.parse_args()
+    if a.pango: run_pango(a.pango, a.cols, a.rows, a.aspect, a.fps)
+    else: run_terminal()
 
 if __name__ == "__main__":
     main()
