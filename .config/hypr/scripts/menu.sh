@@ -31,8 +31,9 @@ menu_main() {
 }
 
 menu_sistema() {
-    case $(pick "Sistema…" "󰌾  Bloquear" "󰤄  Suspender" "󰗽  Sair do Hyprland" "󰜉  Reiniciar" "󰐥  Desligar") in
+    case $(pick "Sistema…" "󰌾  Bloquear" "󱄄  Screensaver" "󰤄  Suspender" "󰗽  Sair do Hyprland" "󰜉  Reiniciar" "󰐥  Desligar") in
         *Bloquear)  run hyprlock ;;
+        *Screensaver) run ~/.config/hypr/screensaver/launch.sh ;;
         *Suspender) run "hyprlock & sleep 1 && systemctl suspend" ;;
         *Sair*)     confirm "Sair do Hyprland?" && run "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit" ;;
         *Reiniciar) confirm "Reiniciar?" && systemctl reboot ;;

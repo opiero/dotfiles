@@ -39,6 +39,21 @@ sudo pacman -S mako libnotify fzf wireplumber kitty hyprsunset
 - =wireplumber=: =wpctl=, used by the volume keys
 - =hyprsunset=: night light (scheduled in =hyprsunset.conf=, toggled from the system menu)
 
+** Screensaver (Omarchy-style)
+
+After 2.5 min idle, =hypridle= opens a fullscreen kitty on every monitor running
+[[https://github.com/ChrisBuilds/terminaltexteffects][TerminalTextEffects]] over
+=.config/hypr/screensaver/logo.txt= (random effect, in a loop); any key or mouse
+movement dismisses it. At 5 min the session locks with =hyprlock=. It can also be
+started from the system menu (Sistema → Screensaver).
+
+#+begin_src sh
+sudo pacman -S hypridle hyprlock jq
+uv tool install terminaltexteffects     # provides ~/.local/bin/tte
+#+end_src
+
+Hyprland starts =hypridle= on login; timings live in =.config/hypr/hypridle.conf=.
+
 ** Keychron K2: F-keys first
 
 Linux drives the Keychron K2 with =hid_apple=, whose automatic Fn mode makes

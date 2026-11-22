@@ -40,6 +40,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprsunset")
     hl.exec_cmd("clipse -listen")
+    -- Idle: screensaver (tte) aos 2,5 min e hyprlock aos 5 min — ver hypridle.conf
+    hl.exec_cmd("hypridle")
     -- OSD de volume para qualquer mudança (inclusive botões do headphone bluetooth)
     hl.exec_cmd("~/.config/hypr/scripts/volume-watch.sh")
     -- Notificação de bateria baixa (20%, 10% e 5%)
