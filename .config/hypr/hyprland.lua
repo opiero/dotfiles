@@ -54,6 +54,13 @@ hl.on("hyprland.start", function()
         .. " __GLX_VENDOR_LIBRARY_NAME=mesa walker --gapplication-service")
 end)
 
+-- O monitor LG no HDMI desconecta e reconecta sozinho (ao dormir/acordar), e a
+-- Waybar não recria a barra na tela que voltou. SIGUSR2 recarrega a Waybar, que
+-- recria as barras de todos os monitores. O sleep espera a saída terminar de subir.
+hl.on("monitor.added", function()
+    hl.exec_cmd("sleep 2; pkill -SIGUSR2 -x waybar")
+end)
+
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
