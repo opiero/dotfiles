@@ -380,3 +380,11 @@ hl.window_rule({
 
     workspace = "special:wine-tray silent",
 })
+
+-- Notificações do mako (Slack etc.) continuam na minha tela, mas não aparecem
+-- no compartilhamento de tela nem em gravações/prints via screencopy.
+hl.layer_rule({
+    name  = "notifications-no-screenshare",
+    match = { namespace = "^notifications$" },
+    no_screen_share = true,
+})
