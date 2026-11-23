@@ -255,11 +255,11 @@ hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }),    
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }),  { description = "move a janela pra baixo" })
 
 -- Troca de workspace com mainMod + [0-9]
--- Move janela ativa para um workspace com mainMod + SHIFT + [0-9]
+-- Move janela ativa para um workspace com mainMod + SHIFT + [0-9], sem ir junto
 for i = 1, 10 do
     local key = i % 10
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "vai pro workspace " .. i })
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }), { description = "move a janela pro workspace " .. i })
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }), { description = "move a janela pro workspace " .. i .. " (sem ir junto)" })
 end
 
 -- Workspace especial (scratchpad)
