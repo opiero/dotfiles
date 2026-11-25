@@ -4,7 +4,7 @@
   "height": 32,
 
   "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock"],
+  "modules-center": ["custom/date", "clock"],
   "modules-right": ["pulseaudio", "network", "battery", "cpu", "memory", "tray"],
 
   "hyprland/workspaces": {
@@ -12,9 +12,16 @@
     "all-outputs": false
   },
 
+  "custom/date": {
+    "exec": "LC_TIME=pt_BR.UTF-8 date '+%a, %d/%m' | sed 's/^./\\U&/'",
+    "interval": 60,
+    "format": "󰃭  {}",
+    "tooltip": false
+  },
+
   "clock": {
     "locale": "pt_BR.UTF-8",
-    "format": "󰃭  {:L%a, %d/%m   %H:%M}",
+    "format": "{:%H:%M}",
     "tooltip-format": "{:L%A, %d de %B de %Y}"
   },
 

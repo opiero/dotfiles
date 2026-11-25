@@ -26,7 +26,7 @@ window#waybar {
   color: #1e1e2e;
 }
 
-#clock, #pulseaudio, #battery, #network, #cpu, #memory {
+#custom-date, #clock, #pulseaudio, #battery, #network, #cpu, #memory {
   padding: 0 10px;
 }
 
