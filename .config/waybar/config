@@ -13,8 +13,9 @@
   },
 
   "clock": {
-    "format": "{:%H:%M}",
-    "tooltip-format": "{:%A, %d %B %Y}"
+    "locale": "pt_BR.UTF-8",
+    "format": "󰃭  {:L%a, %d/%m   %H:%M}",
+    "tooltip-format": "{:L%A, %d de %B de %Y}"
   },
 
   "pulseaudio": {
