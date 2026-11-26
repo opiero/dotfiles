@@ -209,8 +209,9 @@ hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("hyprlock"), { description = "bloqu
 hl.bind("SUPER + CONTROL + V", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'clipse'"), { description = "abre o clipboard manager" })
 hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'lazydocker'"), { description = "abre o lazydocker" })
 hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(terminal .. " --class floating-default -e 'bluetui'"), { description = "abre o bluetooth" })
-hl.bind("PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m window"), { description = "bate o print da janela" })
-hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m region"), { description = "bate o print da região" })
+-- O print abre no satty pra anotar (setas, formas, texto); config em ~/.config/satty.
+hl.bind("PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m window --raw | satty --filename -"), { description = "bate o print da janela e abre pra anotar" })
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("/home/pieroc/.local/bin/hyprshot -m region --raw | satty --filename -"), { description = "bate o print da região e abre pra anotar" })
 
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager), { description = "abre o gerenciador de arquivos" })
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }), { description = "alterna a janela entre flutuante e tiled" })
@@ -353,6 +354,16 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "pip-floating",
+-- Editor de anotação do print: flutua centralizado em vez de entrar no tiling
+hl.window_rule({
+    name  = "satty-floating",
+    match = { class = "^com.gabm.satty$" },
+
+    float  = true,
+    size   = "monitor_w*0.8 monitor_h*0.8",
+    center = true,
+})
+
     match = { title = "^(Picture-in-Picture)$" },
 
     float = true,

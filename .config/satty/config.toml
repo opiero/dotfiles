@@ -1,0 +1,18 @@
+# Editor de anotação aberto pelo print (PRINT / SUPER+PRINT no hyprland.lua).
+# Enter copia pro clipboard e fecha; Ctrl+S salva em ~/Imagens e fecha; Esc fecha.
+[general]
+fullscreen = false
+early-exit = ["copy", "save"]
+initial-tool = "arrow"
+copy-command = "wl-copy"
+annotation-size-factor = 1
+output-filename = "~/Imagens/%Y-%m-%d-%H%M%S_satty.png"
+save-after-copy = false
+actions-on-enter = ["save-to-clipboard", "exit"]
+actions-on-escape = ["exit"]
+corner-roundness = 12
+primary-highlighter = "block"
+
+[font]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
