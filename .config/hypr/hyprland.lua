@@ -15,7 +15,9 @@ hl.monitor({
 hl.monitor({
     output   = "HDMI-A-1",
     mode     = "3840x2160@30.00",
-    position = "-3776x448",
+    -- Encostado na borda direita do eDP (-5248 + 2880/2 = -3808); com vão entre
+    -- os monitores o focus/move por direção (SUPER+HJKL) não passa de uma tela pra outra.
+    position = "-3808x448",
     scale    = 2.00,
 })
 
@@ -352,8 +354,6 @@ hl.window_rule({
     center = true,
 })
 
-hl.window_rule({
-    name  = "pip-floating",
 -- Editor de anotação do print: flutua centralizado em vez de entrar no tiling
 hl.window_rule({
     name  = "satty-floating",
@@ -364,6 +364,8 @@ hl.window_rule({
     center = true,
 })
 
+hl.window_rule({
+    name  = "pip-floating",
     match = { title = "^(Picture-in-Picture)$" },
 
     float = true,
